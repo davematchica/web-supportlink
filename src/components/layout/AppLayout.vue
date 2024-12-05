@@ -9,14 +9,14 @@ function onClick() {
 </script>
 
 <template>
-  <v-responsive class="border rounded">
+  <v-responsive>
     <v-app :theme="theme">
-      <v-app-bar class="px-3">
+      <v-app-bar class="px-3" :color="theme === 'light' ? 'grey-lighten-5' : 'grey-darken-3'">
         <v-spacer></v-spacer>
 
         <v-btn
-          :prepend-icon="theme === 'light' ? 'mdi-weather-sunny' : 'mdi-weather-night'"
-          text="Toggle Theme"
+          :icon="theme === 'light' ? 'mdi-weather-sunny' : 'mdi-weather-night'"
+          variant="elevated"
           slim
           @click="onClick"
         ></v-btn>
@@ -30,7 +30,9 @@ function onClick() {
 
       <!-- footer start -->
 
-      <v-footer border app>2024 - Copyright SoppurtLink</v-footer>
+      <v-footer :color="theme === 'light' ? 'grey-lighten-5' : 'grey-darken-3'" border app>
+        2024 - Copyright SoppurtLink
+      </v-footer>
 
       <!-- footer end -->
     </v-app>
