@@ -13,7 +13,7 @@ const { mobile } = useDisplay()
           <v-card class="mx-auto" elevation="20">
             <v-card-title class="text-center">
               <v-img
-                class="mx-auto"
+                class="mx-auto my-5"
                 src="/public/logo.jfif"
                 :width="mobile ? '75%' : '25%'"
               ></v-img>
