@@ -15,7 +15,7 @@ const { mobile } = useDisplay()
             <v-card-title class="text-center">
               <v-img
                 class="mx-auto my-5"
-                src="/public/img/logo.jfif"
+                src="/public/img/suplink-logo.png"
                 :width="mobile ? '75%' : '25%'"
               ></v-img>
               <h3 class="font-weight-black">Welcome to SupportLink</h3>
