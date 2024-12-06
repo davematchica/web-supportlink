@@ -1,12 +1,16 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 
 const theme = ref(localStorage.getItem('theme') ?? 'light')
 
 function onClick() {
   theme.value = theme.value === 'light' ? 'dark' : 'light'
-  localStorage.getItem('theme', theme.value)
+  localStorage.setItem('theme', theme.value)
 }
+
+onMounted(() => {
+  document.body.setAttribute('data-theme', theme.value)
+})
 </script>
 
 <template>
