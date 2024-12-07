@@ -11,8 +11,9 @@ const { mobile } = useDisplay()
     <template #content>
       <v-container fluid>
         <v-row>
-          <v-col class="mx-auto pt-16" cols="12" md="6">
-            <v-card class="mx-auto" elevation="20">
+          <v-col cols="12" md="8" class="bg-surface-light h-screen" v-if="!mobile"></v-col>
+          <v-col cols="12" md="4" :class="mobile ? '' : 'pt-16'">
+            <v-card class="mx-auto" elevation="0" max-width="600">
               <v-card-title class="text-center">
                 <v-img
                   class="mx-auto my-5"
@@ -24,6 +25,8 @@ const { mobile } = useDisplay()
               </v-card-title>
 
               <v-card-text class="bg-surface-light pt-4">
+                <v-divider class="my-5"></v-divider>
+
                 <LoginForm></LoginForm>
 
                 <v-divider class="my-5"></v-divider>

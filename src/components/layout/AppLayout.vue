@@ -35,13 +35,8 @@ onMounted(() => {
 
       <!-- footer start -->
 
-      <v-footer
-        class="font-weight-bold"
-        :color="theme === 'light' ? 'grey-lighten-5' : 'grey-darken-3'"
-        border
-        app
-      >
-        2024 - Copyright SoppurtLink
+      <v-footer :color="theme === 'light' ? 'grey-lighten-5' : 'grey-darken-3'" border app>
+        Copyright © 2024 - SoppurtLink | All Rights Reserved
       </v-footer>
 
       <!-- footer end -->
