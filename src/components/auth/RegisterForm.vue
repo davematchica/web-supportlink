@@ -1,14 +1,45 @@
+<script setup>
+import { ref } from 'vue'
+
+const isPasswordVisible = ref(false)
+const isConfirmPasswordVisible = ref(false)
+</script>
+
 <template>
   <v-form fast-fail @submit.prevent>
-    <v-text-field label="Firstname" variant="outlined"></v-text-field>
+    <v-row>
+      <v-col cols="12" md="6">
+        <v-text-field label="Firstname"></v-text-field>
+      </v-col>
 
-    <v-text-field label="Lastname" variant="outlined"></v-text-field>
+      <v-col cols="12" md="6">
+        <v-text-field label="Lastname"></v-text-field>
+      </v-col>
 
-    <v-text-field label="Email" variant="outlined"></v-text-field>
+      <v-col cols="12">
+        <v-text-field label="Email" prepend-inner-icon="mdi-email-outline"></v-text-field>
+      </v-col>
 
-    <v-text-field label="Password" type="password" variant="outlined"></v-text-field>
+      <v-col cols="12" md="6">
+        <v-text-field
+          label="Password"
+          prepend-inner-icon="mdi-lock-outline"
+          :type="isPasswordVisible ? 'text' : 'password'"
+          :append-inner-icon="isPasswordVisible ? 'mdi-eye' : 'mdi-eye-off'"
+          @click:append-inner="isPasswordVisible = !isPasswordVisible"
+        ></v-text-field>
+      </v-col>
 
-    <v-text-field label="Confirm Password" type="password" variant="outlined"></v-text-field>
+      <v-col cols="12" md="6">
+        <v-text-field
+          label="Confirm Password"
+          prepend-inner-icon="mdi-lock-check-outline"
+          :type="isConfirmPasswordVisible ? 'text' : 'password'"
+          :append-inner-icon="isConfirmPasswordVisible ? 'mdi-eye' : 'mdi-eye-off'"
+          @click:append-inner="isConfirmPasswordVisible = !isConfirmPasswordVisible"
+        ></v-text-field>
+      </v-col>
+    </v-row>
 
     <v-btn
       class="gradient-btn mt-2"
