@@ -25,7 +25,7 @@ const formData = ref({
 })
 
 const onSubmit = () => {
-  // alert(formData.value.email)
+  alert(formData.value.email)
 }
 
 const onFormSubmit = () => {
