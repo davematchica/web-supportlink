@@ -1,7 +1,11 @@
 <script setup>
+import { formActionDefault, supabase } from '@/utils/supabase'
 import { requiredValidator, emailValidator } from '@/utils/validators'
-
+import AlertNotification from '@/components/common/AlertNotification.vue'
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
 
 const isPasswordVisible = ref(false)
 const refVForm = ref()
@@ -15,8 +19,32 @@ const formData = ref({
   ...formDataDefault,
 })
 
-const onSubmit = () => {
-  alert(formData.value.email)
+const formAction = ref({
+  ...formActionDefault,
+})
+
+const onSubmit = async () => {
+  formAction.value = { ...formActionDefault }
+  formAction.value.formProcess = true
+
+  const { data, error } = await supabase.auth.signInWithPassword({
+    email: formData.value.email,
+    password: formData.value.password,
+  })
+
+  if (error) {
+    console.log(error)
+    formAction.value.formErrorMesage = error.message
+    formAction.value.formStatus = error.status
+  } else if (data) {
+    console.log(data)
+    formAction.value.formSucessMesage = 'Login Sucessfully'
+    router.replace('/system/dashboard')
+  }
+
+  refVForm.value?.reset()
+
+  formAction.value.formProcess = false
 }
 
 const onFormSubmit = () => {
@@ -27,7 +55,12 @@ const onFormSubmit = () => {
 </script>
 
 <template>
-  <v-form ref="refVForm" @submit.prevent="onFormSubmit">
+  <AlertNotification
+    :form-success-message="formAction.formSucessMesage"
+    :form-error-message="formAction.formErrorMesage"
+  ></AlertNotification>
+
+  <v-form class="mt-5" ref="refVForm" @submit.prevent="onFormSubmit">
     <v-text-field
       v-model="formData.email"
       label="Email"
