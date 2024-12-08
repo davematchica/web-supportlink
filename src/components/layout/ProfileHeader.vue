@@ -1,18 +1,49 @@
 <script setup>
-import { ref } from 'vue'
+import { supabase } from '@/utils/supabase'
+import { onMounted, ref } from 'vue'
 
 // Mock user data (replace this with real data if needed)
 const user = ref({
-  initials: 'JD',
-  fullName: 'John Doe',
-  email: 'john.doe@doe.com',
+  initials: '',
+  fullName: '',
+  email: '',
 })
 
-// Logout function
-const onLogout = () => {
-  alert('Logged out!')
-  // Add actual logout functionality here
+const formAction = ref({
+  ...formActionDefault,
+})
+
+const onLogout = async () => {
+  /// Reset Form Action utils; Turn on processing at the same time
+  formAction.value = { ...formActionDefault, formProcess: true }
+
+  // Get supabase logout functionality
+  const { error } = await supabase.auth.signOut()
+  if (error) {
+    console.error('Error during logout:', error)
+    return
+  }
+
+  formAction.value.formProcess = false
+  // Redirect to homepage
+  router.replace('/')
 }
+
+const getUser = async () => {
+  const {
+    data: {
+      user: { user_metadata: metadata },
+    },
+  } = await supabase.auth.getUser()
+
+  userData.value.email = metadata.email
+  userData.value.fullName = metadata.firstname + ' ' + metadata.lastname
+  userData.value.initials = getAvatar(userData.value.fullName)
+}
+
+onMounted(() => {
+  getUser()
+})
 </script>
 
 <template>
