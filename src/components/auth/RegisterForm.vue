@@ -9,6 +9,9 @@ import {
 import { ref } from 'vue'
 import AlertNotification from '@/components/common/AlertNotification.vue'
 import { supabase, formActionDefault } from '@/utils/supabase.js'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
 
 const formDataDefault = {
   firstname: '',
@@ -52,8 +55,10 @@ const onSubmit = async () => {
   } else if (data) {
     console.log(data)
     formAction.value.formSuccessMessage = 'Sucessfully Registered Account'
-    refVForm.value?.reset()
+    router.replace('/dashboard')
   }
+
+  refVForm.value?.reset()
 
   formAction.value.formProcess = false
 }

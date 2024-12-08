@@ -12,3 +12,13 @@ export const formActionDefault = {
   formErrorMesage: '',
   formSucessMesage: ''
 }
+
+export const isAuthenticated = async () => {
+  const { data, error } = await supabase.auth.setSession()
+
+  if (error) {
+    console.error('Error getting session:', error.message)
+  }
+
+  return !!data.session
+}
