@@ -7,10 +7,8 @@ import {
 } from '@/utils/validators'
 
 import { ref } from 'vue'
-
-const isPasswordVisible = ref(false)
-const isConfirmPasswordVisible = ref(false)
-const refVForm = ref()
+import AlertNotification from '@/components/common/AlertNotification.vue'
+import { supabase, formActionDefault } from '@/utils/supabase.js'
 
 const formDataDefault = {
   firstname: '',
@@ -24,8 +22,40 @@ const formData = ref({
   ...formDataDefault,
 })
 
-const onSubmit = () => {
-  alert(formData.value.email)
+const formAction = ref({
+  ...formActionDefault,
+})
+
+const isPasswordVisible = ref(false)
+const isConfirmPasswordVisible = ref(false)
+const refVForm = ref()
+
+const onSubmit = async () => {
+  formAction.value = { ...formActionDefault }
+  formAction.value.formProcess = true
+
+  const { data, error } = await supabase.auth.signUp({
+    email: formData.value.email,
+    password: formData.value.password,
+    options: {
+      data: {
+        firstname: formData.value.firstname,
+        lastname: formData.value.lastname,
+      },
+    },
+  })
+
+  if (error) {
+    console.log(error)
+    formAction.value.formErrorMessage = error.message
+    formAction.value.formStatus = error.status
+  } else if (data) {
+    console.log(data)
+    formAction.value.formSuccessMessage = 'Sucessfully Registered Account'
+    refVForm.value?.reset()
+  }
+
+  formAction.value.formProcess = false
 }
 
 const onFormSubmit = () => {
@@ -36,7 +66,12 @@ const onFormSubmit = () => {
 </script>
 
 <template>
-  <v-form ref="refVForm" @submit.prevent="onFormSubmit">
+  <AlertNotification
+    :form-success-message="formAction.formSucessMesage"
+    :form-error-message="formAction.formErrorMesage"
+  ></AlertNotification>
+
+  <v-form class="mt-5" ref="refVForm" @submit.prevent="onFormSubmit">
     <v-row>
       <v-col cols="12" md="6">
         <v-text-field
@@ -97,6 +132,8 @@ const onFormSubmit = () => {
       color="primary"
       block
       prepend-icon="mdi-account-plus"
+      :disabled="formAction.formProcess"
+      :loading="formAction.formProcess"
       >Register</v-btn
     >
   </v-form>
@@ -104,16 +141,16 @@ const onFormSubmit = () => {
 
 <style scoped>
 .gradient-btn {
-  background: linear-gradient(90deg, #ffd700, #ff69b4, #1e88e5); /* Yellow, Pink, Blue */
-  color: white; /* Ensures text/icon is visible */
+  background: linear-gradient(90deg, #ffd700, #ff69b4, #1e88e5);
+  color: white;
   border: none;
 }
 
 .gradient-btn:hover {
-  filter: brightness(1.2); /* Brighten on hover */
+  filter: brightness(1.2);
 }
 
 .gradient-btn.v-btn {
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); /* Elevation effect */
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
 }
 </style>
