@@ -67,7 +67,7 @@ const onFormSubmit = () => {
 
 <template>
   <AlertNotification
-    :form-success-message="formAction.formSucessMesage"
+    :form-success-message="formAction.formSuccessMessage"
     :form-error-message="formAction.formErrorMesage"
   ></AlertNotification>
 
