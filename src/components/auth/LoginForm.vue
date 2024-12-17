@@ -61,6 +61,34 @@ const onFormSubmit = () => {
   ></AlertNotification>
 
   <v-form class="mt-5" ref="refVForm" @submit.prevent="onFormSubmit">
+    <!-- Role Selection Buttons -->
+    <div class="mb-4 d-flex justify-center align-center">
+      <v-btn-toggle v-model="selectedRole" mandatory>
+        <v-btn
+          size="large"
+          rounded="xl"
+          value="Student"
+          outlined
+          class="text-h7 font-weight-bold mx-5"
+          color="#558B2F"
+        >
+          Client
+        </v-btn>
+        <v-btn
+          size="large"
+          rounded="xl"
+          value="Admin"
+          outlined
+          class="text-h7 font-weight-bold mx-5"
+          color="#558B2F"
+        >
+          Worker
+        </v-btn>
+      </v-btn-toggle>
+    </div>
+
+    <v-divider class="my-5"></v-divider>
+
     <v-text-field
       v-model="formData.email"
       label="Email"
