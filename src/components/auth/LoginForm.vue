@@ -61,6 +61,8 @@ const onFormSubmit = () => {
   ></AlertNotification>
 
   <v-form class="mt-5" ref="refVForm" @submit.prevent="onFormSubmit">
+    <v-divider class="my-5"></v-divider>
+
     <v-text-field
       v-model="formData.email"
       label="Email"
