@@ -1,4 +1,6 @@
 <script setup>
+import { useAuthUserStore } from '@/stores/authUser'
+import TopProfileNavigation from './navigation/TopProfileNavigation.vue'
 import { ref, onMounted } from 'vue'
 import { useDisplay } from 'vuetify'
 import ProfileHeader from './ProfileHeader.vue'
@@ -87,13 +89,15 @@ onMounted(() => {
 
 <!-- <script setup>
 import { isAuthenticated } from '@/utils/supabase'
-import ProfileHeader from './ProfileHeader.vue'
 import { ref, onMounted } from 'vue'
 import { useDisplay } from 'vuetify'
 
 const props = defineProps(['isWithAppBarNavIcon'])
 
 const emit = defineEmits(['isDrawerVisible', 'theme'])
+
+// Use Pinia Store
+const authStore = useAuthUserStore()
 
 const { mobile } = useDisplay()
 const theme = ref(localStorage.getItem('theme') ?? 'light')
@@ -139,7 +143,7 @@ onMounted(() => {
           @click="onToggleTheme"
         ></v-btn>
 
-        <ProfileHeader v-if="isLoggedIn"></ProfileHeader>
+        <TopProfileNavigation v-if="isLoggedIn"></TopProfileNavigation>
       </v-app-bar>
 
       <slot name="navigation"></slot>
@@ -149,8 +153,26 @@ onMounted(() => {
       </v-main>
 
       <v-footer :color="theme === 'light' ? 'grey-lighten-5' : 'grey-darken-3'" border app>
-        Copyright © 2024 - SoppurtLink | All Rights Reserved
+        <v-container>
+          <v-row justify="space-between">
+            <!-- Left-aligned text -->
+            <v-col cols="12" sm="6" class="text-center text-sm-start">
+              <span>Copyright © 2024 - SoppurtLink | All Rights Reserved</span>
+            </v-col>
+
+            <!-- Right-aligned links in a single line -->
+            <v-col cols="12" sm="6" class="text-center text-sm-end">
+              <a href="/privacy-policy" class="footer-link">Privacy Policy</a>
+              <span class="footer-divider mx-2">|</span>
+              <a href="/terms-of-service" class="footer-link">Terms of Service</a>
+              <span class="footer-divider mx-2">|</span>
+              <a href="/faqs" class="footer-link">FAQs</a>
+              <span class="footer-divider mx-2">|</span>
+              <a href="/feedback" class="footer-link">Feedback</a>
+            </v-col>
+          </v-row>
+        </v-container>
       </v-footer>
     </v-app>
   </v-responsive>
-</template> -->
+</template>

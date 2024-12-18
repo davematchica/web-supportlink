@@ -25,8 +25,6 @@ const { mobile } = useDisplay()
               </v-card-title>
 
               <v-card-text class="bg-surface-light pt-4">
-                <v-divider class="my-5"></v-divider>
-
                 <LoginForm></LoginForm>
 
                 <v-divider class="my-5"></v-divider>
